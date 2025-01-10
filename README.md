@@ -5,15 +5,19 @@ ImageJ macros for analyzing GFP fluorescence in multi-channel images. Supplement
 // Author: [Lía Alza Blanco]
 // Date: [10/01/2025]
 
+// Define input directory
 //@ File (label="Input directory", style="directory") chosenDir;
 inputDir = chosenDir + File.separator;
 setBatchMode(false);
+
+// Supported file formats
 var acceptedNonBioFormatsFiles = "jpg,jpeg,tif,png,bmp,gif,avi,ijm,txt";
 
 // Load Bio-Formats plugin
 run("Bio-Formats Macro Extensions");
 processBioFormatFiles(inputDir);
 
+// Function to process Bio-Format compatible files recursively
 function processBioFormatFiles(currentDirectory) {
     fileList = getFileList(currentDirectory);
     for (file = 0; file < fileList.length; file++) {
@@ -34,10 +38,13 @@ function processBioFormatFiles(currentDirectory) {
     }
 }
 
+// Function to analyze the current file
 function runMyMacro() {
     // Set measurement parameters
     run("Set Measurements...", "area mean min limit display redirect=None decimal=3");
     setBackgroundColor(0, 0, 0);
+
+    // Get image details
     name = getTitle();
     getDimensions(width, height, channels, slices, frames);
 
@@ -54,11 +61,14 @@ function runMyMacro() {
     rename("maskALL");
     run("Despeckle", "stack");
     setOption("BlackBackground", true);
+
+    // Morphological operations
     run("Erode", "stack");
     for (i = 0; i < 8; i++) {
         run("Dilate", "stack");
     }
 
+    // Process mask
     selectWindow(name);
     run("Duplicate...", "duplicate channels=1");
     setAutoThreshold("IJ_IsoData dark");
