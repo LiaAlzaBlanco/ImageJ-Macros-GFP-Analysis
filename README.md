@@ -1,8 +1,8 @@
-# ImageJ-Macros-GFP-Analysis
+# ImageJ-Macros-GFP-over-redchannel-Analysis
 ImageJ macros for analyzing GFP fluorescence in multi-channel images. Supplementary material.
 // Macro for analyzing mean pixel intensity of GFP channel over the red channel across each layer
 // Supplementary Table 1
-// Author: [Lía Alza Blanco]
+// Author: [Diego Megías]
 // Date: [10/01/2025]
 
 // Define input directory
